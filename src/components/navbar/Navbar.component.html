@@ -13,7 +13,7 @@
       
           <ul class="nav-links">
             <li class="nav-item" [class.active]="true">Home</li>
-            <li class="nav-item">Products</li>
+            <li class="nav-item" (click)="navigateToProducts()">Products</li>
             <li *ngIf="layout !== 'layoutC'" class="nav-item">Settings</li>
             <li *ngIf="layout === 'layoutC'" class="nav-item">About Us</li>
             <li *ngIf="layout === 'layoutC'" class="nav-item">Contact</li>

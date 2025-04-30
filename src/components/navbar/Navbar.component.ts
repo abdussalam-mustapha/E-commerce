@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,4 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
   @Input() layout: 'layoutA' | 'layoutB' | 'layoutC' = 'layoutA';
+
+  constructor(private router: Router) {}
+
+  navigateToProducts() {
+    this.router.navigate(['/products']);
+  }
 }
