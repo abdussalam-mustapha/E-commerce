@@ -1,0 +1,100 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Manage Your Products</h1>
+    <p>Effortlessly organize and oversee your inventory in one place.</p>
+    <button class="get-started-btn">Get Started</button>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+  <h2>Key Features</h2>
+  <div class="features-grid">
+    <div class="feature-card" *ngFor="let feature of features">
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="testimonial">
+  <div class="testimonial-card">
+    <div class="rating">
+      <span class="star" *ngFor="let star of [1,2,3,4,5]">⭐</span>
+    </div>
+    <p class="testimonial-text">{{ testimonial.comment }}</p>
+    <div class="testimonial-author">
+      <img src="assets/images/profile-placeholder.jpg" alt="Profile" class="author-image">
+      <div class="author-info">
+        <h4>{{ testimonial.name }}</h4>
+        <p>{{ testimonial.role }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter">
+  <div class="newsletter-content">
+    <h2>ShopSmart</h2>
+    <div class="subscribe-form">
+      <h3>Subscribe to our newsletter</h3>
+      <div class="form-group">
+        <input type="email" placeholder="Enter your email">
+        <button class="subscribe-btn">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">User guides</a></li>
+        <li><a href="#">Webinars</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Contact us</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Plans & Pricing</h4>
+      <ul>
+        <li><a href="#">Personal</a></li>
+        <li><a href="#">Startup</a></li>
+        <li><a href="#">Organization</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="language-selector">
+      <select>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div class="social-links">
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p>&copy; 2025 Brand, Inc. • Privacy • Terms • Sitemap</p>
+  </div>
+</footer>

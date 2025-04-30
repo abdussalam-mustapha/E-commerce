@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopNow</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+          <img src="assets/logo.png" alt="logo" class="logo" />
+          <span class="brand">{{ layout === 'layoutC' ? 'ShopSmart' : 'ShopNow'}}</span>
+      
+          <ul class="nav-links">
+            <li class="nav-item" [class.active]="true">Home</li>
+            <li class="nav-item">Products</li>
+            <li *ngIf="layout !== 'layoutC'" class="nav-item">Settings</li>
+            <li *ngIf="layout === 'layoutC'" class="nav-item">About Us</li>
+            <li *ngIf="layout === 'layoutC'" class="nav-item">Contact</li>
+          </ul>
+        </div>
+      
+        <div class="navbar-right">
+          <!-- Layout A: Profile + Help -->
+          <ng-container *ngIf="layout === 'layoutA'">
+            <button class="profile-btn">
+              <i class="fa fa-user"></i> Profile
+            </button>
+            <button class="help-btn">
+              <i class="fa fa-question"></i> Help
+            </button>
+          </ng-container>
+      
+          <!-- Layout B: Search icon + user avatar -->
+          <ng-container *ngIf="layout === 'layoutB'">
+            <i class="fa fa-search search-icon"></i>
+            <img src="assets/avatar.jpg" class="avatar" />
+          </ng-container>
+      
+          <!-- Layout C: Search input + cart -->
+          <ng-container *ngIf="layout === 'layoutC'">
+            <div class="search-wrapper">
+              <i class="fa fa-search search-icon"></i>
+              <input type="text" placeholder="Search ..." class="search-input" />
+            </div>
+            <i class="fa fa-search search-icon"></i>
+            <i class="fa fa-shopping-cart cart-icon"></i>
+          </ng-container>
+        </div>
+      </nav>
+      
+</body>
+</html>
