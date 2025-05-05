@@ -1,0 +1,113 @@
+.filters-panel {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+
+  .search-box {
+    margin-bottom: 1.5rem;
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+  }
+
+  .filter-section {
+    margin-bottom: 1.5rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #495057;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+
+    .price-range {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+
+      span {
+        color: #6c757d;
+      }
+    }
+
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .form-check {
+        margin: 0;
+        min-width: 120px;
+      }
+    }
+
+    .sort-controls {
+      display: flex;
+      gap: 0.5rem;
+
+      select {
+        flex: 1;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 0.25rem;
+
+        .btn {
+          padding: 0.5rem 1rem;
+          border: 1px solid #007bff;
+          background-color: white;
+          color: #007bff;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            background-color: #007bff;
+            color: white;
+          }
+
+          &.btn-primary {
+            background-color: #007bff;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Scrollbar styling
+.tags-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tags-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.tags-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.tags-list::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}

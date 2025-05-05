@@ -1,15 +1,23 @@
 export interface Product {
   id: string;
   name: string;
+  sku: string;
   description?: string;
   price: number;
-  stock: number;
-  sku: string;
-  updatedAt: Date;
+  stockQuantity: number;
   lowStockThreshold?: number;
+  category?: Category;
+  tags: string[];
+  updatedAt: Date;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  description?: string;
 }
 
 export interface StockStatus {
-  status: 'normal' | 'low' | 'out';
+  status: 'out' | 'low' | 'normal';
   message: string;
 }

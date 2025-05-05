@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { Product } from '../product.interface';
 import { ProductService } from '../product.service';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -21,7 +21,10 @@ export class ProductDetailComponent implements OnInit {
     private router: Router
   ) {
     this.product$ = this.route.paramMap.pipe(
-      switchMap(params => this.productService.getProduct(params.get('id') || ''))
+      map(params => {
+        const id = params.get('id') || '';
+        return this.productService.getProduct(id);
+      })
     );
   }
 

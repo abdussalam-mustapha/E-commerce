@@ -1,74 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
-import { Product } from '../product.interface';
+import { Product, Category } from '../product.interface';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-  productForm: FormGroup;
-  isEditMode = false;
-  private productId: string | null = null;
+  product: Partial<Product> = {
+    name: '',
+    sku: '',
+    description: '',
+    price: 0,
+    stockQuantity: 0,
+    lowStockThreshold: 5,
+    category: undefined,
+    tags: []
+  };
+
+  categories: Category[] = [
+    { id: 'electronics', name: 'Electronics', description: 'Electronic devices and accessories' },
+    { id: 'clothing', name: 'Clothing', description: 'Apparel and fashion items' },
+    { id: 'books', name: 'Books', description: 'Books and publications' },
+    { id: 'home', name: 'Home & Living', description: 'Home decor and furniture' }
+  ];
+
+  isEditing = false;
+  newTag = '';
 
   constructor(
-    private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.productForm = this.fb.group({
-      name: ['', [Validators.required]],
-      sku: ['', [Validators.required]],
-      price: [0, [Validators.required, Validators.min(0)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
-      description: [''],
-      lowStockThreshold: [5, [Validators.required, Validators.min(1)]]
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEditMode = true;
-      this.productId = id;
-      this.loadProduct(id);
-    }
-  }
-
-  private loadProduct(id: string): void {
-    this.productService.getProduct(id).subscribe(product => {
-      if (product) {
-        this.productForm.patchValue({
-          name: product.name,
-          sku: product.sku,
-          price: product.price,
-          stock: product.stock,
-          description: product.description,
-          lowStockThreshold: product.lowStockThreshold || 5
-        });
+    const productId = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      this.isEditing = true;
+      const existingProduct = this.productService.getProduct(productId);
+      if (existingProduct) {
+        this.product = { ...existingProduct };
+      } else {
+        this.router.navigate(['/products']);
       }
-    });
+    }
   }
 
   onSubmit(): void {
-    if (this.productForm.valid) {
-      const productData = this.productForm.value;
-      
-      if (this.isEditMode && this.productId) {
-        this.productService.updateProduct(this.productId, productData);
-      } else {
-        this.productService.addProduct(productData);
-      }
+    const productData = {
+      ...this.product,
+      tags: this.product.tags || []
+    };
 
-      this.router.navigate(['/products']);
+    if (this.isEditing && productData.id) {
+      this.productService.updateProduct(productData.id, productData);
+    } else {
+      this.productService.addProduct(productData as Omit<Product, 'id' | 'updatedAt'>);
     }
+    this.router.navigate(['/products']);
+  }
+
+  addTag(): void {
+    if (this.newTag && !this.product.tags?.includes(this.newTag)) {
+      this.product.tags = [...(this.product.tags || []), this.newTag];
+      this.newTag = '';
+    }
+  }
+
+  removeTag(tag: string): void {
+    this.product.tags = this.product.tags?.filter(t => t !== tag) || [];
   }
 
   onCancel(): void {

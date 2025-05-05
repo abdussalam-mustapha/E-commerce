@@ -1,89 +1,68 @@
 <div class="container mx-auto p-4">
   <div class="form-container">
-    <h1 class="title">{{isEditMode ? "Edit" : "Create"}} Product</h1>
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
-      <div class="form-group">
-        <label for="name" class="label">Product Name</label>
-        <input 
-          id="name" 
-          type="text" 
-          formControlName="name"
-          class="input"
-          [class.error]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
-          placeholder="Enter product name">
-        <p *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" 
-           class="error-message">Name is required</p>
-      </div>
+    <div class="product-form">
+      <h2 class="title">{{ isEditing ? 'Edit' : 'Add' }} Product</h2>
 
-      <div class="form-group">
-        <label for="sku" class="label">SKU</label>
-        <input 
-          id="sku" 
-          type="text" 
-          formControlName="sku"
-          class="input"
-          [class.error]="productForm.get('sku')?.invalid && productForm.get('sku')?.touched"
-          placeholder="Enter SKU">
-        <p *ngIf="productForm.get('sku')?.invalid && productForm.get('sku')?.touched" 
-           class="error-message">SKU is required</p>
-      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name" class="label">Name</label>
+          <input type="text" id="name" name="name" [(ngModel)]="product.name" class="input" required>
+        </div>
 
-      <div class="form-group">
-        <label for="price" class="label">Price</label>
-        <input 
-          id="price" 
-          type="number" 
-          formControlName="price"
-          class="input"
-          [class.error]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
-          placeholder="0.00">
-        <p *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" 
-           class="error-message">Price must be greater than 0</p>
-      </div>
+        <div class="form-group">
+          <label for="sku" class="label">SKU</label>
+          <input type="text" id="sku" name="sku" [(ngModel)]="product.sku" class="input" required>
+        </div>
 
-      <div class="form-group">
-        <label for="stock" class="label">Stock</label>
-        <input 
-          id="stock" 
-          type="number" 
-          formControlName="stock"
-          class="input"
-          [class.error]="productForm.get('stock')?.invalid && productForm.get('stock')?.touched"
-          placeholder="0">
-        <p *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched" 
-           class="error-message">Stock must be 0 or greater</p>
-      </div>
+        <div class="form-group">
+          <label for="description" class="label">Description</label>
+          <textarea id="description" name="description" [(ngModel)]="product.description" class="textarea"></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="description" class="label">Description</label>
-        <textarea 
-          id="description" 
-          formControlName="description" 
-          rows="4" 
-          class="textarea"
-          placeholder="Enter product description"></textarea>
-      </div>
+        <div class="form-group">
+          <label for="price" class="label">Price</label>
+          <input type="number" id="price" name="price" [(ngModel)]="product.price" min="0" class="input" required>
+        </div>
 
-      <div class="form-actions">
-        <button 
-          type="button" 
-          (click)="onCancel()" 
-          class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-          Cancel
-        </button>
-        <button 
-          type="submit" 
-          [disabled]="!productForm.valid" 
-          class="btn btn-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-          </svg>
-          {{isEditMode ? "Update" : "Create"}} Product
-        </button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="stockQuantity" class="label">Stock Quantity</label>
+          <input type="number" id="stockQuantity" name="stockQuantity" [(ngModel)]="product.stockQuantity" min="0" class="input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lowStockThreshold" class="label">Low Stock Threshold</label>
+          <input type="number" id="lowStockThreshold" name="lowStockThreshold" [(ngModel)]="product.lowStockThreshold" min="1" class="input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="label">Category</label>
+          <select id="category" name="category" [(ngModel)]="product.category" class="input" required>
+            <option [ngValue]="undefined">Select a category</option>
+            <option *ngFor="let category of categories" [ngValue]="category">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Tags</label>
+          <div class="tags-input">
+            <input type="text" [(ngModel)]="newTag" name="newTag" placeholder="Add a tag" class="input">
+            <button type="button" (click)="addTag()" class="btn btn-secondary">Add</button>
+          </div>
+          <div class="tags-list" *ngIf="product.tags?.length">
+            <span class="tag" *ngFor="let tag of product.tags">
+              {{ tag }}
+              <button type="button" (click)="removeTag(tag)" class="tag-remove">&times;</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update' : 'Create' }} Product</button>
+          <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

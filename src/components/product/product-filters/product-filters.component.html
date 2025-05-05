@@ -1,0 +1,97 @@
+<div class="filters-panel">
+  <div class="search-box mb-4">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search by name or SKU..."
+      [ngModel]="(filters$ | async)?.searchQuery"
+      (ngModelChange)="onSearchChange($event)">
+  </div>
+
+  <div class="filter-section">
+    <h3>Category</h3>
+    <select 
+      class="form-select" 
+      [ngModel]="(filters$ | async)?.category?.id"
+      (ngModelChange)="onCategoryChange($event)">
+      <option [ngValue]="null">All Categories</option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="filter-section">
+    <h3>Price Range</h3>
+    <ng-container *ngIf="priceRange$ | async as range">
+      <div class="price-range">
+        <input 
+          type="number" 
+          class="form-control" 
+          [min]="range.min" 
+          [max]="range.max"
+          [ngModel]="(filters$ | async)?.priceRange?.min || range.min"
+          (ngModelChange)="onMinPriceChange($event, range)">
+        <span>to</span>
+        <input 
+          type="number" 
+          class="form-control" 
+          [min]="range.min" 
+          [max]="range.max"
+          [ngModel]="(filters$ | async)?.priceRange?.max || range.max"
+          (ngModelChange)="onMaxPriceChange($event, range)">
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="filter-section">
+    <h3>Tags</h3>
+    <div class="tags-list">
+      <ng-container *ngIf="filters$ | async as filters">
+        <div *ngFor="let tag of availableTags$ | async" class="form-check">
+          <input 
+            type="checkbox" 
+            class="form-check-input" 
+            [id]="'tag-' + tag"
+            [checked]="filters.tags.includes(tag)"
+            (change)="onTagChange($event, tag)">
+          <label class="form-check-label" [for]="'tag-' + tag">{{ tag }}</label>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Sort By</h3>
+    <div class="sort-controls">
+      <select 
+        class="form-select" 
+        [ngModel]="(filters$ | async)?.sortBy"
+        (ngModelChange)="onSortChange($event)">
+        <option *ngFor="let option of sortOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+      <div class="btn-group">
+        <button 
+          class="btn" 
+          [class.btn-primary]="(filters$ | async)?.sortDirection === 'asc'"
+          [class.btn-outline-primary]="(filters$ | async)?.sortDirection !== 'asc'"
+          (click)="onSortDirectionChange('asc')">
+          ↑
+        </button>
+        <button 
+          class="btn" 
+          [class.btn-primary]="(filters$ | async)?.sortDirection === 'desc'"
+          [class.btn-outline-primary]="(filters$ | async)?.sortDirection !== 'desc'"
+          (click)="onSortDirectionChange('desc')">
+          ↓
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-outline-secondary w-100 mt-4" (click)="resetFilters()">
+    Reset Filters
+  </button>
+</div>

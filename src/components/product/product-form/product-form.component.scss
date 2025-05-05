@@ -12,6 +12,7 @@
   font-weight: 700;
   color: #1a202c;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .product-form {
@@ -24,6 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .label {
@@ -70,6 +72,54 @@
 .error-message {
   font-size: 0.75rem;
   color: #dc2626;
+}
+
+.tags-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  
+  .input {
+    flex: 1;
+  }
+  
+  .btn {
+    min-width: 60px;
+  }
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e5e7eb;
+    color: #4b5563;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    
+    .tag-remove {
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 0.25rem;
+      padding: 0 0.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        color: #dc2626;
+      }
+    }
+  }
 }
 
 .form-actions {
